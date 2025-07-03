@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🧠 Ultimate Visual Chaos</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: black;
+      height: 100%;
+      width: 100%;
+      font-family: monospace;
+    }
+
+    .flying-text, .emoji {
+      position: absolute;
+      white-space: nowrap;
+      pointer-events: none;
+      font-size: 1.5rem;
+      user-select: none;
+      animation: fly 5s linear infinite;
+    }
+
+    @keyframes fly {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--dx), var(--dy)) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+ <script>
+  const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{}|;:",.<>?';
+  const emojis = [
+    '😂','😅','😎','🤯','🧠','👽','👻','😈','🤡','💥','🚀','🛸','🌈','💣','🌀',
+    '🐸','🍕','🦄','🎉','💀','🥵','🥶','🤖','👺','🦾','🐍','🫠','👾','🌪','🧨','☢️','⚡',
+    '🔥','🎃','🐙','🐵','💩','🍄','📟','🖲️','📡','🧬','🪐','🔮','🛠️','⚙️','🧪','🔊','📢'
+  ];
+
+  function getRandomText(length = 20) {
+    return Array.from({ length }, () => charset[Math.floor(Math.random() * charset.length)]).join('');
+  }
+
+  function getRandomColor() {
+    const hue = Math.floor(Math.random() * 360);
+    return `hsl(${hue}, 100%, 60%)`;
+  }
+
+  function spawnFlyingText() {
+    const el = document.createElement("div");
+    el.className = "flying-text";
+    el.textContent = getRandomText(Math.floor(Math.random() * 30) + 10);
+    el.style.left = `${Math.random() * window.innerWidth}px`;
+    el.style.top = `${Math.random() * window.innerHeight}px`;
+    el.style.color = getRandomColor();
+    el.style.fontSize = `${Math.random() * 2 + 1.5}rem`;
+
+    const dx = `${Math.random() * 1000 - 500}px`;
+    const dy = `${Math.random() * 1000 - 500}px`;
+    el.style.setProperty('--dx', dx);
+    el.style.setProperty('--dy', dy);
+
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 5000);
+  }
+
+  function spawnEmoji() {
+    const el = document.createElement("div");
+    el.className = "emoji";
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = `${Math.random() * window.innerWidth}px`;
+    el.style.top = `${Math.random() * window.innerHeight}px`;
+    el.style.color = getRandomColor();
+    el.style.fontSize = `${Math.random() * 4 + 2}rem`;
+
+    const dx = `${Math.random() * 1500 - 750}px`;
+    const dy = `${Math.random() * 1500 - 750}px`;
+    el.style.setProperty('--dx', dx);
+    el.style.setProperty('--dy', dy);
+
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 5000);
+  }
+
+  function spawnFlash() {
+    const flash = document.createElement('div');
+    flash.style.position = 'absolute';
+    flash.style.left = `${Math.random() * window.innerWidth}px`;
+    flash.style.top = `${Math.random() * window.innerHeight}px`;
+    flash.style.width = `${Math.random() * 150 + 100}px`;
+    flash.style.height = `${Math.random() * 150 + 100}px`;
+    flash.style.backgroundColor = getRandomColor();
+    flash.style.borderRadius = '50%';
+    flash.style.opacity = 0.6;
+    flash.style.zIndex = 0;
+    flash.style.boxShadow = `0 0 40px 20px ${flash.style.backgroundColor}`;
+    flash.style.transition = 'opacity 0.5s ease-out';
+
+    document.body.appendChild(flash);
+    setTimeout(() => {
+      flash.style.opacity = 0;
+      setTimeout(() => flash.remove(), 500);
+    }, 100);
+  }
+
+  // Увеличили частоту появления
+  setInterval(spawnFlyingText, 1);  // Было 
+  setInterval(spawnEmoji, 1);       // Было 150
+  setInterval(spawnFlash, 1);       // Было 70
+</script>
+
+
+</body>
+</html>
